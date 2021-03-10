@@ -25,44 +25,51 @@ class _EmailScreenState extends State<EmailScreen> {
                   ),
                 );
               },
-              color: Colors.blue,
+              textColor: Colors.white,
+              color: Colors.blue[300],
               child: Text('Next')
           ),
         ),
       ),
       backgroundColor: Colors.grey[100],
-      body: SingleChildScrollView(
-        child: Column(
-            children: [
-              Container(
-                  margin: EdgeInsets.only(top: 160.0, left: 20.0, right: 20.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text('Welcome to Gin '
-                          'Finans',
-                      style: kHeaderTextStyle,
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text('Welcome to The Bank of The Future. '
-                          'Manage and track your accounts on '
-                          'the go.',
-                      style: kBodyTextStyle,
-                      ),
-                      SizedBox(
-                      height: 10.0,
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(20.0),
-                        child: TextField(
-                          decoration: kEmailInputDecoration,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+              children: [
+                Container(
+                    margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text('Welcome to Gin '
+                            'Finans',
+                        style: kHeaderTextStyle,
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text('Welcome to The Bank of The Future. '
+                            'Manage and track your accounts on '
+                            'the go.',
+                        style: kBodyTextStyle,
+                        ),
+                        SizedBox(
+                        height: 10.0,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10.0)
+                          ),
+                          padding: EdgeInsets.all(20.0),
+                          child: TextField(
+                            decoration: kEmailInputDecoration,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-            ]
+              ]
+          ),
         ),
       ),
     );
