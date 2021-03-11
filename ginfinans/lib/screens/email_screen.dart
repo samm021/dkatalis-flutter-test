@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ginfinans/utils/constants.dart';
 import 'package:ginfinans/screens/password_screen.dart';
+import 'package:ginfinans/components/bottom_button.dart';
+import 'package:ginfinans/utils/validator.dart';
 
 class EmailScreen extends StatefulWidget {
   @override
@@ -8,28 +10,19 @@ class EmailScreen extends StatefulWidget {
 }
 
 class _EmailScreenState extends State<EmailScreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
-        child: Container(
-          height: 70.0,
-          padding: EdgeInsets.all(10.0),
-          child: FlatButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PasswordScreen()
-                  ),
-                );
-              },
-              textColor: Colors.white,
-              color: Colors.blue[300],
-              child: Text('Next')
-          ),
-        ),
+      bottomNavigationBar: BottomButton(
+        onPressNext: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PasswordScreen()
+            ),
+          );
+        }
       ),
       backgroundColor: Colors.grey[100],
       body: Center(
@@ -40,20 +33,27 @@ class _EmailScreenState extends State<EmailScreen> {
                     margin: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
                       children: <Widget>[
-                        Text('Welcome to Gin '
-                            'Finans',
-                        style: kHeaderTextStyle,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text('Welcome to\n'
+                              'GIN Finans',
+                          textAlign: TextAlign.left,
+                          style: kHeaderTextStyle,
+                          ),
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
-                        Text('Welcome to The Bank of The Future. '
-                            'Manage and track your accounts on '
-                            'the go.',
-                        style: kBodyTextStyle,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text('Welcome to The Bank of The Future.\n'
+                              'Manage and track your accounts on\n'
+                              'the go.',
+                          style: kBodyTextStyle,
+                          ),
                         ),
                         SizedBox(
-                        height: 10.0,
+                          height: 30.0,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -61,8 +61,14 @@ class _EmailScreenState extends State<EmailScreen> {
                             borderRadius: BorderRadius.circular(10.0)
                           ),
                           padding: EdgeInsets.all(20.0),
-                          child: TextField(
-                            decoration: kEmailInputDecoration,
+                          child: Form(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            child: TextFormField(
+                              validator: (value) {
+                                return Validator().validateEmail(value);
+                              },
+                              decoration: kEmailInputDecoration,
+                            ),
                           ),
                         ),
                       ],
