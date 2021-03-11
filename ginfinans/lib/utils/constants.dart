@@ -15,12 +15,13 @@ const kBodyTextStyle = TextStyle(
 const kPasswordScreenHeaderStyle = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
-  color: Colors.white
+  color: Colors.white,
 );
 
 const kPasswordScreenBodyStyle = TextStyle(
   fontSize: 15.0,
-  color: Colors.white
+  color: Colors.white,
+  height: 1.5
 );
 
 final kPasswordScreenComplexityStyle = TextStyle(
@@ -50,7 +51,8 @@ final kWhiteCheckGreenFilled = Stack(
 
 const kSelectOptionHintStyle = TextStyle(
     height: 1.2,
-    fontSize: 18.0,
+    fontSize: 15.0,
+    fontWeight: FontWeight.w600,
     color: Colors.black
 );
 

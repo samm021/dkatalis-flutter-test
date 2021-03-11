@@ -5,23 +5,32 @@ import 'package:ginfinans/components/bottom_button.dart';
 import 'package:ginfinans/utils/validator.dart';
 
 class EmailScreen extends StatefulWidget {
+  EmailScreen({this.registrationData});
+
+  final registrationData;
+
   @override
   _EmailScreenState createState() => _EmailScreenState();
 }
 
 class _EmailScreenState extends State<EmailScreen> {
+  String validator;
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomButton(
         onPressNext: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => PasswordScreen()
-            ),
-          );
+          if (widget.registrationData['email'] != null && validator == null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PasswordScreen(
+                    registrationData: widget.registrationData
+                  )
+              ),
+            );
+          }
         }
       ),
       backgroundColor: Colors.grey[100],
@@ -65,7 +74,13 @@ class _EmailScreenState extends State<EmailScreen> {
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             child: TextFormField(
                               validator: (value) {
-                                return Validator().validateEmail(value);
+                                validator = Validator().validateEmail(value);
+                                return validator;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.registrationData['email'] = value;
+                                });
                               },
                               decoration: kEmailInputDecoration,
                             ),
