@@ -1,33 +1,57 @@
 import 'package:flutter/material.dart';
 
 const kHeaderTextStyle = TextStyle(
-  fontFamily: 'Spartan MB',
   fontSize: 40.0,
-  fontWeight: FontWeight.bold
+  fontWeight: FontWeight.w900,
+  height: 1.3,
 );
 
 const kBodyTextStyle = TextStyle(
-  fontFamily: 'Spartan MB',
   fontSize: 18.0,
+  fontWeight: FontWeight.w800,
+  height: 1.5
 );
 
 const kPasswordScreenHeaderStyle = TextStyle(
-  fontFamily: 'Spartan MB',
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
   color: Colors.white
 );
 
 const kPasswordScreenBodyStyle = TextStyle(
-  fontFamily: 'Spartan MB',
   fontSize: 15.0,
   color: Colors.white
 );
 
 final kPasswordScreenComplexityStyle = TextStyle(
-    fontFamily: 'Spartan MB',
     fontSize: 18.0,
     color: Colors.yellow[700]
+);
+
+const kSelectOptionLabelStyle = TextStyle(
+    fontSize: 14.0,
+    color: Colors.grey
+);
+
+final kWhiteCheckGreenFilled = Stack(
+  children: [
+    Positioned.fill(
+        child: Container(
+          margin: EdgeInsets.all(5.0),
+          color: Colors.white,
+        )
+    ),
+    Icon(
+        Icons.check_circle,
+        color: Colors.green
+    ),
+  ],
+);
+
+const kSelectOptionHintStyle = TextStyle(
+    height: 1.2,
+    fontSize: 18.0,
+    color: Colors.black
 );
 
 final kEmailInputDecoration = InputDecoration(
@@ -41,6 +65,9 @@ final kEmailInputDecoration = InputDecoration(
   hintStyle: TextStyle(
       color: Colors.grey
   ),
+  errorStyle: TextStyle(
+    color: Colors.blue
+  ),
   border: OutlineInputBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(10.0),
@@ -49,21 +76,3 @@ final kEmailInputDecoration = InputDecoration(
   ),
 );
 
-const kPasswordInputDecoration = InputDecoration(
-  filled: true,
-  fillColor: Colors.white,
-  hintText: 'Create Password',
-  suffixIcon: Icon(
-    Icons.remove_red_eye,
-    color: Colors.blue,
-  ),
-  hintStyle: TextStyle(
-      color: Colors.grey
-  ),
-  border: OutlineInputBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(10.0),
-      ),
-      borderSide: BorderSide.none
-  ),
-);

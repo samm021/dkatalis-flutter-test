@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:ginfinans/screens/personal_info_screen.dart';
 import 'package:ginfinans/utils/constants.dart';
+import 'package:ginfinans/components/bottom_button.dart';
+import 'package:ginfinans/components/password_text_field.dart';
+import 'package:ginfinans/utils/validator.dart';
 
 class PasswordScreen extends StatefulWidget {
+
   @override
   _PasswordScreenState createState() => _PasswordScreenState();
 }
 
+
+
 class _PasswordScreenState extends State<PasswordScreen> {
+  bool visibility = false;
+  bool lowercase = false;
+  bool uppercase = false;
+  bool integer = false;
+  bool lengthMoreThan9 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,25 +27,17 @@ class _PasswordScreenState extends State<PasswordScreen> {
       appBar: AppBar(
         title: Text('Create Account')
       ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.transparent,
-          child: Container(
-            height: 70.0,
-            padding: EdgeInsets.all(10.0),
-            child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PersonalInfoScreen()
-                    ),
-                  );
-                },
-                color: Colors.blue[300],
-                textColor: Colors.white,
-                child: Text('Next')
-            ),
-          ),
+        bottomNavigationBar: BottomButton(
+          onPressNext: () {
+            if (lowercase && uppercase && integer && lengthMoreThan9) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PersonalInfoScreen()
+                ),
+              );
+            }
+          }
         ),
       body: Center(
         child: SingleChildScrollView(
@@ -57,11 +61,21 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         height: 60.0,
                       ),
                       Container(
-                        child: TextField(
-                          decoration: kPasswordInputDecoration,
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
+                        child: PasswordTextField(
+                          passwordVisible: visibility,
+                          onIconPress: () {
+                            setState(() {
+                              visibility = !visibility;
+                            });
+                          },
+                          onUserWritePassword: (value) {
+                            setState(() {
+                              lowercase = Validator().hasLowercase(value);
+                              uppercase = Validator().hasUppercase(value);
+                              integer = Validator().hasInteger(value);
+                              lengthMoreThan9 = Validator().hasLengthMoreThanEqual9(value);
+                            });
+                          },
                         ),
                       ),
                       SizedBox(
@@ -75,7 +89,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           SizedBox(
                             width: 10.0,
                           ),
-                          Text('Very Weak',
+                          Text(Validator().complexity(
+                              lowercase, uppercase, integer, lengthMoreThan9
+                          ),
                             style: kPasswordScreenComplexityStyle,
                           )
                         ],
@@ -88,8 +104,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         children: [
                           Column(
                             children: [
-                              Text('a',
-                              style: kPasswordScreenHeaderStyle,
+                              lowercase
+                              ? kWhiteCheckGreenFilled
+                              : Text('a',
+                                style: kPasswordScreenHeaderStyle,
                               ),
                               Text('Lowercase',
                               style: kPasswordScreenBodyStyle,
@@ -98,7 +116,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           ),
                           Column(
                             children: [
-                              Text('A',
+                              uppercase
+                              ? kWhiteCheckGreenFilled
+                              : Text('A',
                                 style: kPasswordScreenHeaderStyle,
                               ),
                               Text('Uppercase',
@@ -108,7 +128,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           ),
                           Column(
                             children: [
-                              Text('123',
+                              integer
+                              ? kWhiteCheckGreenFilled
+                              : Text('123',
                                 style: kPasswordScreenHeaderStyle,
                               ),
                               Text('Number',
@@ -118,7 +140,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           ),
                           Column(
                             children: [
-                              Text('9+',
+                              lengthMoreThan9
+                              ? kWhiteCheckGreenFilled
+                              : Text('9+',
                                 style: kPasswordScreenHeaderStyle,
                               ),
                               Text('Characters',
@@ -138,3 +162,5 @@ class _PasswordScreenState extends State<PasswordScreen> {
     );
   }
 }
+
+
