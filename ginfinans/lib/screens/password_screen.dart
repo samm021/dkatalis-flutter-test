@@ -21,22 +21,30 @@ class _PasswordScreenState extends State<PasswordScreen> {
   bool integer = false;
   bool lengthMoreThan9 = false;
   TextEditingController controller = TextEditingController();
+  Map registrationData;
+
+  @override
+  void initState() {
+    super.initState();
+    registrationData = {...widget.registrationData};
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.blueAccent[200],
       appBar: AppBar(
-        title: Text('Create Account')
+        title: Text('Create Account'),
+        backgroundColor: Colors.blueAccent[200],
       ),
         bottomNavigationBar: BottomButton(
-          onPressNext: () {
-            if (lowercase && uppercase && integer && lengthMoreThan9) {
+          onPressNext: (lowercase && uppercase && integer && lengthMoreThan9)
+            ? () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => PersonalInfoScreen(
-                      registrationData: widget.registrationData
+                      registrationData: registrationData
                     )
                 ),
               ).then((value) {
@@ -50,127 +58,125 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 });
               });
             }
-          }
+            : null
         ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Create Password',
-                        style: kPasswordScreenHeaderStyle,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('Create Password',
+                    style: kContentScreenHeaderStyle,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text('Password will be used to login to account',
+                    style: kContentScreenBodyStyle,
+                  ),
+                  SizedBox(
+                    height: 60.0,
+                  ),
+                  Container(
+                    child: PasswordTextField(
+                      passwordVisible: visibility,
+                      onIconPress: () {
+                        setState(() {
+                          visibility = !visibility;
+                        });
+                      },
+                      onUserWritePassword: (value) {
+                        setState(() {
+                          lowercase = Validator().hasLowercase(value);
+                          uppercase = Validator().hasUppercase(value);
+                          integer = Validator().hasInteger(value);
+                          lengthMoreThan9 = Validator().hasLengthMoreThanEqual9(value);
+                          registrationData['password'] = value;
+                        });
+                      },
+                      passwordFieldController: controller,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Row(
+                    children: [
+                      Text('Complexity',
+                      style: kContentScreenBodyStyle,
                       ),
                       SizedBox(
-                        height: 10.0,
+                        width: 10.0,
                       ),
-                      Text('Password will be used to login to account',
-                        style: kPasswordScreenBodyStyle,
+                      Text(Validator().complexity(
+                          lowercase, uppercase, integer, lengthMoreThan9
                       ),
-                      SizedBox(
-                        height: 60.0,
-                      ),
-                      Container(
-                        child: PasswordTextField(
-                          passwordVisible: visibility,
-                          onIconPress: () {
-                            setState(() {
-                              visibility = !visibility;
-                            });
-                          },
-                          onUserWritePassword: (value) {
-                            setState(() {
-                              lowercase = Validator().hasLowercase(value);
-                              uppercase = Validator().hasUppercase(value);
-                              integer = Validator().hasInteger(value);
-                              lengthMoreThan9 = Validator().hasLengthMoreThanEqual9(value);
-                              widget.registrationData['password'] = value;
-                            });
-                          },
-                          passwordFieldController: controller,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
+                        style: kPasswordScreenComplexityStyle,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
                         children: [
-                          Text('Complexity',
-                          style: kPasswordScreenBodyStyle,
+                          lowercase
+                          ? kWhiteCheckGreenFilled
+                          : Text('a',
+                            style: kContentScreenHeaderStyle,
                           ),
-                          SizedBox(
-                            width: 10.0,
-                          ),
-                          Text(Validator().complexity(
-                              lowercase, uppercase, integer, lengthMoreThan9
-                          ),
-                            style: kPasswordScreenComplexityStyle,
+                          Text('Lowercase',
+                          style: kContentScreenBodyStyle,
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: 40.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              lowercase
-                              ? kWhiteCheckGreenFilled
-                              : Text('a',
-                                style: kPasswordScreenHeaderStyle,
-                              ),
-                              Text('Lowercase',
-                              style: kPasswordScreenBodyStyle,
-                              )
-                            ],
+                          uppercase
+                          ? kWhiteCheckGreenFilled
+                          : Text('A',
+                            style: kContentScreenHeaderStyle,
                           ),
-                          Column(
-                            children: [
-                              uppercase
-                              ? kWhiteCheckGreenFilled
-                              : Text('A',
-                                style: kPasswordScreenHeaderStyle,
-                              ),
-                              Text('Uppercase',
-                                style: kPasswordScreenBodyStyle,
-                              )
-                            ],
+                          Text('Uppercase',
+                            style: kContentScreenBodyStyle,
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          integer
+                          ? kWhiteCheckGreenFilled
+                          : Text('123',
+                            style: kContentScreenHeaderStyle,
                           ),
-                          Column(
-                            children: [
-                              integer
-                              ? kWhiteCheckGreenFilled
-                              : Text('123',
-                                style: kPasswordScreenHeaderStyle,
-                              ),
-                              Text('Number',
-                                style: kPasswordScreenBodyStyle,
-                              )
-                            ],
+                          Text('Number',
+                            style: kContentScreenBodyStyle,
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          lengthMoreThan9
+                          ? kWhiteCheckGreenFilled
+                          : Text('9+',
+                            style: kContentScreenHeaderStyle,
                           ),
-                          Column(
-                            children: [
-                              lengthMoreThan9
-                              ? kWhiteCheckGreenFilled
-                              : Text('9+',
-                                style: kPasswordScreenHeaderStyle,
-                              ),
-                              Text('Characters',
-                                style: kPasswordScreenBodyStyle,
-                              )
-                            ],
+                          Text('Characters',
+                            style: kContentScreenBodyStyle,
                           )
                         ],
                       )
                     ],
-                  ),
-                ),
-              ]
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

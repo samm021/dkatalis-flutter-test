@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ginfinans/utils/constants.dart';
+import 'package:flutter/cupertino.dart';
 
 class SelectForm extends StatelessWidget {
 
@@ -26,9 +27,7 @@ class SelectForm extends StatelessWidget {
             style: kSelectOptionLabelStyle,
           ),
           Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: DropdownButtonFormField(
-              autovalidate: true,
               decoration: InputDecoration.collapsed(hintText: ''),
               icon: Icon(Icons.keyboard_arrow_down),
               hint: Text('- Choose Option -',

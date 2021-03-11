@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 
-const kHeaderTextStyle = TextStyle(
+const kHomeScreenHeaderTextStyle = TextStyle(
   fontSize: 40.0,
   fontWeight: FontWeight.w900,
   height: 1.3,
+  color: Colors.black
 );
 
-const kBodyTextStyle = TextStyle(
+final kHomeScreenHeaderTextStyleEnding = TextStyle(
+    fontSize: 40.0,
+    fontWeight: FontWeight.w900,
+    height: 1.3,
+    color: Colors.blueAccent[200]
+);
+
+const kHomeScreenTextStyle = TextStyle(
   fontSize: 18.0,
   fontWeight: FontWeight.w800,
   height: 1.5
 );
 
-const kPasswordScreenHeaderStyle = TextStyle(
+const kContentScreenHeaderStyle = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );
 
-const kPasswordScreenBodyStyle = TextStyle(
+const kContentScreenBodyStyle = TextStyle(
   fontSize: 15.0,
   color: Colors.white,
   height: 1.5
@@ -44,7 +52,7 @@ final kWhiteCheckGreenFilled = Stack(
     ),
     Icon(
         Icons.check_circle,
-        color: Colors.green
+        color: Colors.green,
     ),
   ],
 );
