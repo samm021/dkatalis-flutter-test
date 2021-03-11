@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class PasswordTextField extends StatelessWidget {
 
-  PasswordTextField({this.passwordVisible, this.onIconPress, this.onUserWritePassword});
+  PasswordTextField({this.passwordVisible, this.onIconPress, this.onUserWritePassword, this.passwordFieldController});
 
   final bool passwordVisible;
   final Function onIconPress;
-  final onUserWritePassword;
+  final Function onUserWritePassword;
+  final TextEditingController passwordFieldController;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class PasswordTextField extends StatelessWidget {
       enableSuggestions: false,
       autocorrect: false,
       onChanged: onUserWritePassword,
+      controller: passwordFieldController,
     );
   }
 }

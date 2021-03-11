@@ -25,22 +25,24 @@ class SelectForm extends StatelessWidget {
           Text(label,
             style: kSelectOptionLabelStyle,
           ),
-          DropdownButtonFormField(
-            decoration: InputDecoration.collapsed(),
-            isExpanded: true,
-            isDense: true,
-            icon: Icon(Icons.keyboard_arrow_down),
-            hint: Text('- Choose Option -',
-              style: kSelectOptionHintStyle,
+          Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: DropdownButtonFormField(
+              autovalidate: true,
+              decoration: InputDecoration.collapsed(hintText: ''),
+              icon: Icon(Icons.keyboard_arrow_down),
+              hint: Text('- Choose Option -',
+                style: kSelectOptionHintStyle,
+              ),
+              value: selectedItem,
+              onChanged: onSelect,
+              items: options.map((option) {
+                return DropdownMenuItem(
+                  child: Text(option),
+                  value: option,
+                );
+              }).toList(),
             ),
-            value: selectedItem,
-            onChanged: onSelect,
-            items: options.map((option) {
-              return DropdownMenuItem(
-                child: Text(option),
-                value: option,
-              );
-            }).toList(),
           ),
         ],
       ),

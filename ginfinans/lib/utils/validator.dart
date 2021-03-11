@@ -1,7 +1,7 @@
 class Validator {
 
   String validateEmail(String value) {
-    if (value == null || value == "") {
+    if (value == '' || value == null) {
       return 'Please input email address';
     }
     Pattern pattern =
@@ -14,7 +14,7 @@ class Validator {
   }
 
   bool hasLowercase(String value) {
-    if (value == null || value == "") {
+    if (value == null || value == '') {
       return false;
     }
     Pattern pattern = r'[a-z]';
@@ -23,7 +23,7 @@ class Validator {
   }
 
   bool hasUppercase(String value) {
-    if (value == null || value == "") {
+    if (value == null || value == '') {
       return false;
     }
     Pattern pattern = r'[A-Z]';
@@ -32,7 +32,7 @@ class Validator {
   }
 
   bool hasInteger(String value) {
-    if (value == null || value == "") {
+    if (value == null || value == '') {
       return false;
     }
     Pattern pattern = r'[0-9]';

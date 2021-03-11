@@ -6,17 +6,18 @@ import 'package:ginfinans/components/select_form.dart';
 import 'package:ginfinans/components/bottom_button.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
+  PersonalInfoScreen({this.registrationData});
+
+  final registrationData;
+
   @override
   _PersonalInfoScreenState createState() => _PersonalInfoScreenState();
 }
 
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   List<String> goals = ['personal saving', 'retirement saving', 'emergency saving', 'etc'];
-  String selectedGoal;
   List<String> incomes = ['3 - 5 million idr', '5 - 10 million idr', '10 - 20 million idr', 'more than 20 million idr'];
-  String selectedIncome;
   List<String> expenses = ['3 - 5 million idr', '5 - 10 million idr', '10 - 20 million idr', 'more than 20 million idr'];
-  String selectedExpense;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +28,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       ),
       bottomNavigationBar: BottomButton(
         onPressNext: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ScheduleScreen()
-            ),
-          );
+          if (widget.registrationData['goal'] != '' && widget.registrationData['income'] != '' && widget.registrationData['expense'] != '') {
+            print(widget.registrationData);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ScheduleScreen()
+              ),
+            );
+          }
         },
       ),
       body: Center(
@@ -60,10 +64,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         child: SelectForm(
                           label: 'Goal for activation',
                           options: goals,
-                          selectedItem: selectedGoal,
+                          selectedItem: widget.registrationData['goal'],
                           onSelect: (newValue) {
                             setState(() {
-                              selectedGoal = newValue;
+                              widget.registrationData['goal'] = newValue;
                             });
                           },
                         )
@@ -75,10 +79,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         child: SelectForm(
                           label: 'Monthly Income',
                           options: incomes,
-                          selectedItem: selectedIncome,
+                          selectedItem: widget.registrationData['income'],
                           onSelect: (newValue) {
                             setState(() {
-                              selectedIncome = newValue;
+                              widget.registrationData['income'] = newValue;
                             });
                           },
                         ),
@@ -90,10 +94,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         child: SelectForm(
                           label: 'Monthly expense',
                           options: expenses,
-                          selectedItem: selectedExpense,
+                          selectedItem: widget.registrationData['expense'],
                           onSelect: (newValue) {
                             setState(() {
-                              selectedExpense = newValue;
+                              widget.registrationData['expense'] = newValue;
                             });
                           },
                         ),

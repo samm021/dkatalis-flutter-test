@@ -6,12 +6,13 @@ import 'package:ginfinans/components/password_text_field.dart';
 import 'package:ginfinans/utils/validator.dart';
 
 class PasswordScreen extends StatefulWidget {
+  PasswordScreen({this.registrationData});
+
+  final registrationData;
 
   @override
   _PasswordScreenState createState() => _PasswordScreenState();
 }
-
-
 
 class _PasswordScreenState extends State<PasswordScreen> {
   bool visibility = false;
@@ -19,6 +20,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
   bool uppercase = false;
   bool integer = false;
   bool lengthMoreThan9 = false;
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,20 @@ class _PasswordScreenState extends State<PasswordScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => PersonalInfoScreen()
+                    builder: (context) => PersonalInfoScreen(
+                      registrationData: widget.registrationData
+                    )
                 ),
-              );
+              ).then((value) {
+                controller.clear();
+                setState(() {
+                  visibility = false;
+                  lowercase = false;
+                  uppercase = false;
+                  integer = false;
+                  lengthMoreThan9 = false;
+                });
+              });
             }
           }
         ),
@@ -74,8 +87,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                               uppercase = Validator().hasUppercase(value);
                               integer = Validator().hasInteger(value);
                               lengthMoreThan9 = Validator().hasLengthMoreThanEqual9(value);
+                              widget.registrationData['password'] = value;
                             });
                           },
+                          passwordFieldController: controller,
                         ),
                       ),
                       SizedBox(
